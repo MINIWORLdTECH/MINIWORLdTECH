@@ -119,7 +119,7 @@ aside.mobile_nav_container {
 
     nav {
         background: $blue;
-        background: linear-gradient(to left, $blue, $purple);
+        background: linear-gradient(to right, $blue, $purple);
         display: flex;
         justify-content: space-evenly;
         align-items: center;
@@ -140,16 +140,53 @@ aside.mobile_nav_container {
         }   
     }
 
-    span.mobile_nav_opener {
+    .mobile_nav_opener {
         cursor: pointer;
         width: 50px;
         height: 50px;
         background: $orange;
+        background: linear-gradient(to right, $blue, $purple);
         margin-left: auto;
         display: none;
+        box-sizing: border-box;
+
+        padding: 0.8rem;
+        flex-direction: column;
+        justify-content: space-evenly;
+        transition: transform 0.3s ease-in-out;
 
         @include breakpoint(768px, max) {
+            display: flex;
+            // display: inline-block;
+        }
+
+        span {
+            width: 100%;
+            height: 3px;
             display: inline-block;
+            background-color: white;
+            transition: all 0.3s ease;
+            
+            &:nth-child(1) {
+                opacity: 1;
+            }
+            &:nth-child(2) {
+                // transform-origin: center;
+            }
+            &:nth-child(3) {
+                opacity: 1;
+            }
+        }
+        &.active span:nth-child(1) {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        // &.active span:nth-child(2) {
+        //     opacity: 0;
+        // }  
+        &.active span:nth-child(3) {
+            transform: translateX(-100%);
+            opacity: 0;
         }
     }
 
@@ -172,28 +209,47 @@ aside.mobile_nav_container {
     text-align: center;
     margin-top: 2rem;
 
+    // @include breakpoint(860px, max) {
+    //     margin-top: 0;
+    // }
+
+    @include breakpoint(560px, max) {
+        text-align: left;
+    }
+
     h1 {
         font-weight: 500;
         letter-spacing: -2px;
         font-size: 3.8rem;
+        line-height: 1.2;
         text-transform: capitalize;
 
         @include breakpoint(1280px, max) {
             font-size: 3rem;
         }
-    }
 
-    h2 {
-        font-weight: 500;
-        font-size: 2rem;
-        line-height: 1.2;
-        text-transform: capitalize;
-        margin-top: -0.6rem;
+        @include breakpoint(860px, max) {
+            font-size: 2.4rem;
+            display: block;
+            white-space: normal;
+        }
 
-        @include breakpoint(1280px, max) {
-            font-size: 2rem;
+        @include breakpoint(460px, max) {
+            font-size: 1.8rem;
         }
     }
+
+    // h2 {
+    //     font-weight: 500;
+    //     font-size: 2rem;
+    //     line-height: 1.2;
+    //     text-transform: capitalize;
+    //     margin-top: -0.6rem;
+
+    //     @include breakpoint(1280px, max) {
+    //         font-size: 2rem;
+    //     }
+    // }
 
     p {
         margin: 1rem 0 3rem 0;
@@ -330,8 +386,6 @@ section.description {
 section.courses {
     background: $royal_blue;
     color: white;
-    border-top: 2px solid lighten($royal_blue, 10%);
-    border-bottom: 2px solid lighten($royal_blue, 10%);
 
     overflow: hidden;
     position: relative;
@@ -339,9 +393,26 @@ section.courses {
     .courses_container {
         display: flex;
         transition: all 1s ease-in-out;
+
+        @include breakpoint(1024px, max) {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        @include breakpoint(768px, max) {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include breakpoint(480px, max) {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+        }
     }
 
     .each_course {
+        border-top: 2px solid lighten($royal_blue, 10%);
+        border-bottom: 2px solid lighten($royal_blue, 10%);
         overflow: hidden;
         position: relative;
         z-index: 1;
@@ -350,13 +421,11 @@ section.courses {
         border-left: 1px solid lighten($royal_blue, 10%);
         display: flex;
         align-items: center;
-
         flex: 0 0 calc(100% / 4);
         box-sizing: border-box;
 
-        @include breakpoint(1080px, max) {
-            flex: 0 0 calc(100% / 3);
-            height: 100%;
+        @include breakpoint(1024px, max) {
+            display: block;
         }
 
         &::after {
@@ -414,6 +483,10 @@ section.courses {
                 line-height: 1.2;
                 font-weight: 400;
                 margin: 2rem 0 1rem 0;
+
+                @include breakpoint(1024px, max) {
+                    font-size: 1.6rem;
+                }
             }
         }
 
@@ -526,6 +599,10 @@ section.courses {
         &:hover {
             box-shadow: 0 0.3rem 1rem rgba($blue, 0.6);
         }
+
+        @include breakpoint(1024px, max) {
+            display: none;
+        }
     }
 
     &:hover .course_slider_button {
@@ -533,7 +610,6 @@ section.courses {
     }
     
     .prev__button {
-        // left: 1.6rem;
         right: calc(3.2rem * 2);
     }
     
@@ -557,6 +633,10 @@ section.services {
     p.section_para {
         margin-bottom: 3rem;
         width: 70%;
+
+        @include breakpoint(768px, max) {
+            width: 100%;
+        }
     }
 }
 
@@ -616,6 +696,10 @@ section.services {
             line-height: 1.2;
             font-weight: 500;
             transition: 0.3s ease-in-out;
+
+            @include breakpoint(480px, max) {
+                font-size: 1.4rem;
+            }
         }
 
         .service_para {
@@ -713,7 +797,7 @@ section.newsletter {
 
 .newsletter_content {
     @include breakpoint(1300px, max) {
-        // margin-bottom: 3rem;
+        text-align: center;
     }
 }
 
@@ -724,9 +808,12 @@ section.newsletter {
     // flex-wrap: wrap;
 
     @include breakpoint(1300px, max) {
-        display: block;
         margin-top: 3rem;
-        justify-content: flex-start;
+        justify-content: center;
+    }
+
+    @include breakpoint(580px, max) {
+        display: block;
     }
 
     input {
@@ -745,6 +832,11 @@ section.newsletter {
         @include breakpoint(1300px, max) {
             margin-left: 0;
             width: auto;
+        }
+
+        @include breakpoint(580px, max) {
+            width: 100%;
+            margin-bottom: 1rem;
         }
 
         &::placeholder {
@@ -769,6 +861,10 @@ section.newsletter {
         box-sizing: border-box;
         transition: 0.3s ease;
         cursor: pointer;
+
+        @include breakpoint(580px, max) {
+            width: 100%;
+        }
 
         .psuedo_text {
             color: white;
@@ -842,6 +938,10 @@ section.upcoming_features {
         line-height: 1.2;
         font-weight: 500;
         margin-bottom: 1rem;
+
+        @include breakpoint(480px, max) {
+            font-size: 1.4rem;
+        }
     }
 
     .feature_description {
@@ -860,6 +960,10 @@ section.upcoming_features {
 
 footer {
     padding: 3rem 10%;
+
+    @include breakpoint(1080px, max) {
+        padding: 3rem 5%;
+    }
 }
 
 .footer_container {
@@ -867,6 +971,20 @@ footer {
     grid-template-columns: repeat(4, 1fr);
     column-gap: 2rem;
     justify-content: space-between;
+
+    @include breakpoint(1080px, max) {
+        column-gap: 1rem;
+    }
+
+    @include breakpoint(960px, max) {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 1rem;
+    }
+
+    @include breakpoint(960px, max) {
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 1rem;
+    }
 }
 
 .footer_column h3,
@@ -883,6 +1001,10 @@ footer {
     color: white;
     text-decoration: none;
     margin-bottom: 5px;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .footer_bottom {

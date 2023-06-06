@@ -1,3 +1,6 @@
+
+@import 'mixins';
+
 // Fonts 
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
@@ -54,7 +57,10 @@ body {
     font-family: 'Poppins', Roboto, sans-serif;
     font-weight: 400;
     opacity: 0;
-    // visibility: hidden;
+
+    @include breakpoint(560px, max) {
+        font-size: 0.9rem;
+    }
 
     &.loaded {
         animation: loaded_effect 0.2s ease-in-out forwards;
@@ -67,12 +73,10 @@ body {
 @keyframes loaded_effect {
     from {
         opacity: 0;
-        // visibility: hidden;
     }
 
     to {
         opacity: 1;
-        // visibility: visible;
     }
 }
 
@@ -125,6 +129,10 @@ section {
     text-transform: capitalize;
     line-height: 1.15;
     letter-spacing: -2px;
+
+    @include breakpoint(480px, max) {
+        font-size: 1.8rem;
+    }
 }
 
 .section_para {

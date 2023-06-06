@@ -14,8 +14,11 @@ const menuBtn = document.getElementById('mobile_nav_opener');
 const mobileMenu = document.querySelector('.mobile_nav_container');
 
 menuBtn.addEventListener('click', () => {
+    menuBtn.classList.toggle('active');
     mobileMenu.classList.toggle('active');
 });
+
+
 
 // Add animations to FAQ questions
 const questions = document.querySelectorAll('.question');
@@ -34,6 +37,7 @@ questions.forEach(question => {
         }
     });
 });
+
 
 
 // Add animated back to top button
@@ -65,47 +69,71 @@ const prevButton = document.querySelector('.prev__button');
 const nextButton = document.querySelector('.next__button');
 
 const cardWidth = cardsContainer.querySelector('.each_course').offsetWidth; // Width of a card
-const cardsInView = 4; // Number of cards visible in the view
+let cardsInView = 4; // Number of cards visible in the view
+const screenWidth = window.innerWidth;
 
-let currentPosition = 0;
-let totalCards = cardsContainer.children.length;
+if (screenWidth > 1024) {
+    let currentPosition = 0;
+    let totalCards = cardsContainer.children.length;
 
-prevButton.addEventListener('click', slideLeft);
-nextButton.addEventListener('click', slideRight);
+    prevButton.addEventListener('click', slideLeft);
+    nextButton.addEventListener('click', slideRight);
 
-// Autoplay slider variables
-let autoplayInterval;
-const autoplayDelay = 5000; // Delay between slides in milliseconds
+    // Autoplay slider variables
+    let autoplayInterval;
+    const autoplayDelay = 5000; // Delay between slides in milliseconds
 
-function startAutoplay() {
-    autoplayInterval = setInterval(slideRight, autoplayDelay);
-}
-
-function stopAutoplay() {
-    clearInterval(autoplayInterval);
-}
-
-// Start autoplay on page load
-startAutoplay();
-
-// Stop autoplay on mouseover
-slider.addEventListener('mouseover', stopAutoplay);
-
-// Restart autoplay on mouseout
-slider.addEventListener('mouseout', startAutoplay);
-
-function slideLeft() {
-    currentPosition += cardWidth;
-    if (currentPosition > 0) {
-        currentPosition = -(totalCards - cardsInView) * cardWidth;
+    function startAutoplay() {
+        autoplayInterval = setInterval(slideRight, autoplayDelay);
     }
-    cardsContainer.style.transform = `translateX(${currentPosition}px)`;
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Start autoplay on page load
+    startAutoplay();
+
+    // Stop autoplay on mouseover
+    slider.addEventListener('mouseover', stopAutoplay);
+
+    // Restart autoplay on mouseout
+    slider.addEventListener('mouseout', startAutoplay);
+
+    function slideLeft() {
+        currentPosition += cardWidth;
+        if (currentPosition > 0) {
+            currentPosition = -(totalCards - cardsInView) * cardWidth;
+        }
+        cardsContainer.style.transform = `translateX(${currentPosition}px)`;
+    }
+
+    function slideRight() {
+        currentPosition -= cardWidth;
+        if (currentPosition < -(totalCards - cardsInView) * cardWidth) {
+            currentPosition = 0;
+        }
+        cardsContainer.style.transform = `translateX(${currentPosition}px)`;
+    }
 }
 
-function slideRight() {
-    currentPosition -= cardWidth;
-    if (currentPosition < -(totalCards - cardsInView) * cardWidth) {
-        currentPosition = 0;
-    }
-    cardsContainer.style.transform = `translateX(${currentPosition}px)`;
-}
+
+
+
+// const scrollLinks = document.querySelectorAll('.btn');
+
+// // Add click event listener to each scroll link
+// scrollLinks.forEach((link) => {
+//     link.addEventListener('click', smoothScroll);
+// });
+
+// // Smooth scroll function
+// function smoothScroll(event) {
+//     event.preventDefault();
+//     const targetId = event.target.getAttribute('href');
+//     const targetElement = document.querySelector(targetId);
+
+//     targetElement.scrollIntoView({
+//         behavior: 'smooth',
+//         block: 'start',
+//     });
+// }
